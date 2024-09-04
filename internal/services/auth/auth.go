@@ -67,7 +67,7 @@ func (a *Auth) Login(
 
 // RegisterNewUser registers new user in the system and returns user ID.
 // If user with given username already exist, returns error.
-func (a *Auth) RegisterNewUser(ctx context.Context, email string, pass string) (int64 error) {
+func (a *Auth) RegisterNewUser(ctx context.Context, email string, pass string) (int64, error) {
 	const op = "auth.RegisterNewUser"
 
 	log := a.log.With(
@@ -89,6 +89,11 @@ func (a *Auth) RegisterNewUser(ctx context.Context, email string, pass string) (
 
 		return 0, fmt.Errorf("%s: %w", op, err)
 	}
+
+	log.Info("user registered")
+
+	return id, nil
+
 }
 
 // IsAdmin checks if user is admin.
